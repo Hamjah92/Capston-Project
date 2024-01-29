@@ -1,0 +1,33 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#3865a0",
+    "activityBar.activeBorder": "#5e213c",
+    "activityBar.background": "#3865a0",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#5e213c",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#3865a0",
+    "statusBar.background": "#2b4d7a",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#3865a0",
+    "statusBarItem.remoteBackground": "#2b4d7a",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#2b4d7a",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#2b4d7a99",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "commandCenter.border": "#e7e7e799"
+  },
+  "peacock.color": "#2b4d7a",
+  "cSpell.words": [
+    "CGST",
+    "cust",
+    "IGST",
+    "sgst",
+    "stockable",
+    "utgst"
+  ],
+  "material-icon-theme.activeIconPack": "nest",
+
+}
