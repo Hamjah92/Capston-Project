@@ -23,16 +23,24 @@ export class AuthController {
   @Public()
   @Post('/login')
   async login(@Body() credentials: LoginDto, @Res({ passthrough: true }) response: Response) {
-    const token = await this.authService.login(credentials);
-    if (token instanceof Error) return { status: false, message: token.message };
-    response.cookie('refreshToken', token.refreshToken, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      sameSite: 'strict',
-      secure: true
-    });
-    
-     return { status: true, "accessToken": token.accessToken }
+    const res = await this.authService.login(credentials);
+
+    if (!res.status) {
+      return {
+        status: false, message: res.message
+      }
+    } else {
+
+      response.cookie('refreshToken', res.data.refreshToken, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        sameSite: 'strict',
+        secure: true
+      });
+      return { status: true, "accessToken": res.data.accessToken }
+
+    }
+
   }
 
   @HttpCode(HttpStatus.OK)
@@ -48,14 +56,15 @@ export class AuthController {
   async refresh(
     @GetUser() user: JwtRefreshPayLoad,
     @Res({ passthrough: true }) response: Response,
-  ) {
-    const data = await this.authService.refresh(user.sub, user.refreshToken);
+  ) {   
+
+    const data = await this.authService.refresh(user.sub, user.refreshToken);    
     response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
       sameSite: 'strict',
       secure: true
     });
-    return {"accessToken": data.accessToken };
+    return { "accessToken": data.accessToken };
   }
 }

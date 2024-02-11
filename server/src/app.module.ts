@@ -10,6 +10,7 @@ import { AuthModule } from './public/auth/auth.module';
 import { AtGuard } from './public/auth/common/guards';
 import { TenancyModule } from './public/tenancy/tenancy.module';
 import { TenantsModule } from './public/tenants/tenants.module';
+import { CustomerModule } from './app/customer/customer.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { TenantsModule } from './public/tenants/tenants.module';
     }),
     UserModule,
     TenantsModule,
+    CustomerModule,
     TenancyModule,
     AuthModule,
   ],

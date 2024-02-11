@@ -11,7 +11,7 @@ export type JwtRefreshPayLoad = {
 }
 @Injectable()
 export class RtJwt extends PassportStrategy(Strategy, 'jwt-refresh') {
-  constructor(private readonly config: ConfigService) {
+  constructor(private readonly config: ConfigService) {    
     super({
       ignoreExpiration: false,
       jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {

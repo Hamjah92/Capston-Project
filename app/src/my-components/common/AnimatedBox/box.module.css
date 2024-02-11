@@ -1,0 +1,49 @@
+.box {
+  background-image: repeating-linear-gradient(
+      0deg,
+      #918888,
+      #918888 9px,
+      transparent 10px,
+      transparent 19px,
+      #918888 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #918888,
+      #918888 9px,
+      transparent 10px,
+      transparent 19px,
+      #918888 20px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      #918888,
+      #918888 9px,
+      transparent 10px,
+      transparent 19px,
+      #918888 20px
+    ),
+    repeating-linear-gradient(
+      270deg,
+      #918888,
+      #918888 9px,
+      transparent 10px,
+      transparent 19px,
+      #918888 20px
+    );
+  background-size: 2px calc(100% + 20px), calc(100% + 20px) 2px, 2px calc(100% + 20px),
+    calc(100% + 20px) 2px;
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
+}
+.box:hover {
+  animation: borderAnimation 0.5s infinite linear;
+}
+@keyframes borderAnimation {
+  from {
+    background-position: 0 0, -20px 0, 100% -20px, 0 100%;
+  }
+  to {
+    background-position: 0 -20px, 0 0, 100% 0, -20px 100%;
+  }
+}

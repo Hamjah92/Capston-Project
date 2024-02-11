@@ -3,7 +3,11 @@ export class UserDto {
 
   @IsString()
   @IsOptional()
-  name: string | null;
+  firstName: string | null;
+
+  @IsString()
+  @IsOptional()
+  lastName: string | null;
 
   @IsNotEmpty()
   @IsEmail()
@@ -11,26 +15,6 @@ export class UserDto {
 
   @IsString()
   @IsNotEmpty()
-  phoneNumber: string
-
-  @IsString()
-  @IsNotEmpty()
   password: string
-
-  @IsString()
-  @IsOptional()
-  avatar: string;
-
-  @IsString()
-  @IsOptional()
-  address: string;
-
-  @IsString()
-  @IsOptional()
-  country: string;
-
-  @IsString()
-  @IsOptional()
-  pinCode: string;
 
 }

@@ -33,9 +33,9 @@ constructor (
 
    create(userDto : User){
     const user = new User();
-    user.name = userDto.name;
+    user.firstName = userDto.firstName;
+    user.lastName = userDto.lastName;
     user.email = userDto.email;
-    user.phoneNumber = userDto.phoneNumber;
     // const result = await this._userRepository.create(user);
     return this._userRepository.save(user);
   }

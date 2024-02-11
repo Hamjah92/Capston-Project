@@ -12,22 +12,10 @@ export class User {
   userId: string;
 
   @Column()
-  name: string;
+  firstName: string;
 
   @Column()
-  phoneNumber: string;
-
-  @Column({nullable: true})
-  avatar: string;
-
-  @Column({ nullable: true, type:"text"})
-  address: string;
-
-  @Column({ nullable: true})
-  country: string;
-
-  @Column({ nullable: true})
-  pinCode: string;
+  lastName: string;
 
   @Column({ unique: true })
   email: string;

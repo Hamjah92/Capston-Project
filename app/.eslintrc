@@ -4,17 +4,8 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": [
-    "unused-imports",
-    "@typescript-eslint",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "prettier"
-  ],
+  "plugins": ["unused-imports", "@typescript-eslint", "prettier"],
+  "extends": ["airbnb", "airbnb-typescript", "airbnb/hooks", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -33,6 +24,12 @@
     }
   },
   "rules": {
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "enableDangerousAutofixThisMayCauseInfiniteLoops": true
+      }
+    ],
     "no-alert": 0,
     "camelcase": 0,
     "no-console": 0,

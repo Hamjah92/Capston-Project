@@ -1,9 +1,10 @@
 import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
-import axios, { endpoints } from 'src/utils/axios';
+import { endpoints, publicApi } from 'src/utils/axios';
+import { useRefreshToken } from 'src/hooks/myHooks/useRefreshToken';
 //
 import { AuthContext } from './auth-context';
-import { isValidToken, setSession } from './utils';
+import { isValidToken, jwtDecode, setSession } from './utils';
 import { ActionMapType, AuthStateType, AuthUserType } from '../../types';
 
 // ----------------------------------------------------------------------
@@ -81,18 +82,17 @@ type Props = {
 
 export function AuthProvider({ children }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const refresh = useRefreshToken();
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(STORAGE_KEY);
+      const data = await refresh();
+      const { accessToken } = data;
+
+      setSession(accessToken);
 
       if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
-
-        const res = await axios.get(endpoints.auth.me);
-
-        const { user } = res.data;
-
+        const user: AuthUserType = jwtDecode(accessToken);
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -132,11 +132,13 @@ export function AuthProvider({ children }: Props) {
       password,
     };
 
-    const res = await axios.post(endpoints.auth.login, data);
+    const res = await publicApi.post(endpoints.auth.login, data);
 
-    const { accessToken, user } = res.data;
+    const { accessToken } = res.data;
+    const user: AuthUserType = jwtDecode(accessToken);
 
     setSession(accessToken);
+    console.log(res.data);
 
     dispatch({
       type: Types.LOGIN,
@@ -159,12 +161,12 @@ export function AuthProvider({ children }: Props) {
         lastName,
       };
 
-      const res = await axios.post(endpoints.auth.register, data);
+      const res = await publicApi.post(endpoints.auth.register, data);
 
       const { accessToken, user } = res.data;
+      console.log(res);
 
-      sessionStorage.setItem(STORAGE_KEY, accessToken);
-
+      setSession(accessToken);
       dispatch({
         type: Types.REGISTER,
         payload: {
