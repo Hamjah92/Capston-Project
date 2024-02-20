@@ -18,6 +18,9 @@ type Props = {
   editAddress: (address: Address) => void;
   removeAddress: (address_id: string) => void;
 };
+
+// type FormDataType = Omit<Address, 'isDefault' | 'AddressType'>;
+
 export const AddressForm: FC<Props> = ({
   defaultAddress,
   addressType,
@@ -34,18 +37,19 @@ export const AddressForm: FC<Props> = ({
   const {
     reset,
     getValues,
+    handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  // const onSubmit = async (data: Address) => {
-  //   if (defaultAddress) {
-  //     editAddress(data);
-  //   } else {
-  //     addAddress(data);
-  //   }
-  //   reset(getInitialAddress(null, addressType));
-  //   handleCloseModal();
-  // };
+  const onSubmit = async (data: any) => {
+    if (defaultAddress) {
+      editAddress(data);
+    } else {
+      addAddress(data);
+    }
+    reset(getInitialAddress(null, addressType));
+    handleCloseModal();
+  };
   return (
     <FormProvider methods={methods}>
       <Grid container spacing={2}>
@@ -78,7 +82,12 @@ export const AddressForm: FC<Props> = ({
               Cancel
             </Button>
 
-            <LoadingButton type="button" variant="contained" loading={isSubmitting}>
+            <LoadingButton
+              type="button"
+              variant="contained"
+              loading={isSubmitting}
+              onClick={handleSubmit(onSubmit)}
+            >
               {!defaultAddress ? 'Add' : 'Save'}
             </LoadingButton>
           </DialogActions>

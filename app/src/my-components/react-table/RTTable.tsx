@@ -19,13 +19,21 @@ type Props = {
   tableData: object[];
   tableCols: ColumnDef<any, any>[];
   sx?: SxProps<Theme>;
+  defaultDense?: boolean;
   handleDeleteSelectedRows: Function;
 };
 
-export const RTTable: FC<Props> = ({ tableData, tableCols, sx, handleDeleteSelectedRows }) => {
+export const RTTable: FC<Props> = ({
+  tableData,
+  tableCols,
+  sx,
+  handleDeleteSelectedRows,
+  defaultDense = true,
+}) => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [isDense, setDense] = useState(defaultDense);
 
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
@@ -55,6 +63,7 @@ export const RTTable: FC<Props> = ({ tableData, tableCols, sx, handleDeleteSelec
           <RTTableSelectedAction
             numSelected={numSelected}
             table={table}
+            dense={isDense}
             actions={
               <Tooltip title="Delete">
                 <IconButton onClick={handleOpenConfirm} color="primary">
@@ -65,7 +74,7 @@ export const RTTable: FC<Props> = ({ tableData, tableCols, sx, handleDeleteSelec
           />
         )}
         <Scrollbar>
-          <Table size="small">
+          <Table size={isDense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
             <RTHeader HeaderGroups={getHeaderGroups()} sx={sx} />
             <RTBody RowModel={getRowModel()} />
           </Table>

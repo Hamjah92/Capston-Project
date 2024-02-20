@@ -5,6 +5,6 @@ export interface Address {
   addressType: AddressType,
   businessAddress: string;
   city: string;
-  state: {stateName: string,stateCode: string};
+  state: string;
   pinCode: string;
 }

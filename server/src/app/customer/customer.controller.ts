@@ -30,8 +30,10 @@ export class CustomerController {
   deleteCustomerById(@Param('customer_id') customer_id: string) {
     return this._customerService.deleteCustomerById(customer_id);
   }
+
   @Delete('deleteMany')
   deleteManyCustomer(@Body('customerIds') customer_ids: string[]) {
     return this._customerService.deleteManyCustomer(customer_ids)
   }
+  
 }

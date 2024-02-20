@@ -1,50 +1,51 @@
-import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink } from 'react-router-dom';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { Button, Container } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { paths } from 'src/routes/paths';
+import { Link as RouterLink } from 'react-router-dom';
 import Iconify from 'src/components/iconify';
-import { RTTable } from 'src/my-components/react-table/RTTable';
 import { useSettingsContext } from 'src/components/settings';
-import { useCustomer } from 'src/hooks/myHooks/database/useCustomer';
-import { customerCols } from './helper/customer.col';
+import { useQuery } from '@tanstack/react-query';
+import { useSupplier } from 'src/hooks/myHooks/database/useSupplier';
+import { useMemo } from 'react';
+import { RTTable } from 'src/my-components/react-table/RTTable';
+import { supplierCols } from './helper/supplier.col';
 
-const CustomerList = () => {
-  const { getAllCustomers, deleteMany } = useCustomer();
-  const tableColumns = useMemo(() => customerCols, []);
+type Props = {};
+
+const SupplierList = (props: Props) => {
+  const { themeStretch } = useSettingsContext();
+  const { getAllSuppliers, deleteMany } = useSupplier();
+
+  const tableColumns = useMemo(() => supplierCols, []);
 
   const { data } = useQuery({
-    queryKey: ['customers'],
-    queryFn: getAllCustomers,
+    queryKey: ['suppliers'],
+    queryFn: getAllSuppliers,
     initialData: [],
     refetchOnWindowFocus: false,
   });
 
-  const { themeStretch } = useSettingsContext();
-
   return (
     <>
       <Helmet>
-        <title> Customer List</title>
+        <title> Supplier List</title>
       </Helmet>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Customer List"
+          heading="Supplier List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Customers', href: paths.dashboard.customer.root },
+            { name: 'Supplier', href: paths.dashboard.supplier.root },
           ]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={paths.dashboard.customer.add}
+              to={paths.dashboard.supplier.add}
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              New Customer
+              New Supplier
             </Button>
           }
         />
@@ -58,4 +59,4 @@ const CustomerList = () => {
   );
 };
 
-export default CustomerList;
+export default SupplierList;

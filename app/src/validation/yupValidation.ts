@@ -9,14 +9,25 @@ export const NewCustomerSchema = Yup.object().shape({
   customerBusinessName: optionalString,
   customerGST: optionalString,
   customerPAN: optionalString,
-  country: Yup.string().required('Country is required'),
-  state: Yup.string().required('State is required')
 });
 
+// 
+
+export const NewSupplierSchema = Yup.object().shape({
+  supplierName: Yup.string().required('Name is required'),
+  supplierEmail: Yup.string().required('Email is required').email(),
+  supplierPhone: Yup.string().required('Phone number is required').min(8, "Enter Number Properly"),
+  supplierGST: optionalString,
+});
+
+
+// 
 export const NewAddressSchema = Yup.object().shape({
   addressId: Yup.string().required("Address Is is needed"),
   businessAddress: Yup.string().required('Address is required'),
   pinCode: Yup.string().required('Pin code is required'),
-  state: Yup.object().required(),
+  addressType: Yup.string(),
+  isDefault: Yup.boolean().default(false),
+  state: Yup.string().required(),
   city: Yup.string().required('city is required'),
 }) 

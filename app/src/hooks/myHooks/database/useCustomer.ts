@@ -2,11 +2,14 @@ import { Row } from '@tanstack/react-table';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CustForm, Customer, CustomerWithAddress } from 'src/@types/customer';
 import { NestCommonRes } from 'src/@types/https';
+import { useSnackbar } from 'src/components/snackbar';
 import { usePrivateApi } from '../usePrivateApi';
 
 
 export const useCustomer = () => {
   const privateApi = usePrivateApi();
+  const { enqueueSnackbar } = useSnackbar();
+
   const getAllCustomers = async () => {
     try {
       const { data } = await privateApi.get('/customer/all');
@@ -32,6 +35,7 @@ export const useCustomer = () => {
   };
 
   const deleteCustomerByID = async (customerId: string) => {
+
     const { data } = await privateApi.delete(`/customer/delete/${customerId}`);
     return data as NestCommonRes;
   };
@@ -53,14 +57,14 @@ export const useCustomer = () => {
     customerBusinessName: customer?.customerBusinessName || '',
     customerGST: customer?.customerGST || '',
     customerPAN: customer?.customerPAN || '',
-    country: customer?.country || '',
-    state: customer?.state || '',
   });
 
   const queryClient = useQueryClient();
   const { mutateAsync: deleteMany } = useMutation({
     mutationFn: deleteManyCustomers,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      enqueueSnackbar(data.message, { variant: data.type });
+
       queryClient.invalidateQueries({ queryKey: ["customers"] });
     },
   });

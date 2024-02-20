@@ -13,10 +13,11 @@ export const RHFPhoneNumber: FC<Props> = ({ name, label }) => {
     <Controller
       control={control}
       name={name}
-      render={({ field: { ...field }, fieldState: { error } }) => (
+      render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <MuiPhoneNumber
           fullWidth
           defaultCountry="in"
+          inputRef={ref}
           {...field}
           variant="outlined"
           label={label}

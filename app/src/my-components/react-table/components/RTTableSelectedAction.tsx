@@ -24,11 +24,11 @@ export function RTTableSelectedAction({ dense, actions, numSelected, table, sx, 
         left: 0,
         width: 1,
         zIndex: 9,
-        height: 58,
+        height: 72,
         position: 'absolute',
         bgcolor: 'primary.lighter',
         ...(dense && {
-          height: 38,
+          height: 52,
         }),
         ...sx,
       }}

@@ -15,6 +15,12 @@ const IndexPage = lazy(() => import('src/pages/dashboard/Dashboard'));
 
 const CustomerList = lazy(() => import('src/pages/customer/CustomerList'));
 const AddCustomer = lazy(() => import('src/pages/customer/AddCustomer'));
+const EditCustomer = lazy(() => import('src/pages/customer/EditCustomer'));
+
+// supplier
+const SupplierList = lazy(() => import('src/pages/supplier/SupplierList'));
+const AddSupplier = lazy(() => import('src/pages/supplier/AddSupplier'));
+const EditSupplier = lazy(() => import('src/pages/supplier/EditSupplier'));
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +44,16 @@ export const dashboardRoutes = [
           { element: <CustomerList />, index: true },
           { path: 'list', element: <CustomerList /> },
           { path: 'Add', element: <AddCustomer /> },
+          { path: 'edit/:customerId', element: <EditCustomer /> },
+        ],
+      },
+      {
+        path: 'supplier',
+        children: [
+          { element: <SupplierList />, index: true },
+          { path: 'list', element: <SupplierList /> },
+          { path: 'Add', element: <AddSupplier /> },
+          { path: 'edit/:supplierId', element: <EditSupplier /> },
         ],
       },
     ],

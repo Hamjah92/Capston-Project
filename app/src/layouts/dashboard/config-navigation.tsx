@@ -62,6 +62,15 @@ export function useNavData() {
               { title: 'Add', path: paths.dashboard.customer.add },
             ],
           },
+          {
+            title: 'Supplier',
+            path: paths.dashboard.supplier.root,
+            icon: ICONS.customer,
+            children: [
+              { title: 'list', path: paths.dashboard.supplier.list },
+              { title: 'Add', path: paths.dashboard.supplier.add },
+            ],
+          },
         ],
       },
       // MANAGEMENT

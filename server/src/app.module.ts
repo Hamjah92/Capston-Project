@@ -11,6 +11,7 @@ import { AtGuard } from './public/auth/common/guards';
 import { TenancyModule } from './public/tenancy/tenancy.module';
 import { TenantsModule } from './public/tenants/tenants.module';
 import { CustomerModule } from './app/customer/customer.module';
+import { SupplierModule } from './app/supplier/supplier.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { CustomerModule } from './app/customer/customer.module';
     CustomerModule,
     TenancyModule,
     AuthModule,
+    SupplierModule,
   ],
   providers: [{
     provide: APP_GUARD,

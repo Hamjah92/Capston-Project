@@ -1,11 +1,13 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useErrorFocus } from 'src/hooks/utilityHooks/useErrorFocus';
+
 import { useForm } from 'react-hook-form';
 // @mui
-import { Card, Grid, Stack, Theme, createStyles } from '@mui/material';
+import { Card, Grid, Stack } from '@mui/material';
 // components
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSnackbar } from 'notistack';
 import { LoadingButton } from '@mui/lab';
 import { useCustomer } from 'src/hooks/myHooks/database/useCustomer';
@@ -15,9 +17,11 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import { ButtonAccordion } from 'src/my-components/common/button/ButtonAccordion';
 
 import { RHFSubmitButton } from 'src/components/hook-form/RHFSubmitButton';
+import { Address } from 'src/@types/address';
+import { NestCommonRes } from 'src/@types/https';
+
 import {
   FormProvider,
-  RHFSelect,
   RHFTextField,
   RHFPhoneNumber,
   RHFTextFieldWithIcon,
@@ -32,12 +36,14 @@ import { CustForm, CustomerWithAddress } from '../../../@types/customer';
 type Props = {
   isEdit: boolean;
   currentCustomer?: CustForm;
+  defaultBillingAddresses?: Address[];
 };
 
-export default function CustomerForm({ isEdit, currentCustomer }: Props) {
-  const { defaultCustomer, createCustomer } = useCustomer();
+export default function CustomerForm({ isEdit, currentCustomer, defaultBillingAddresses }: Props) {
+  const { defaultCustomer, createCustomer, editCustomer } = useCustomer();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const { customerId } = useParams();
 
   const defaultValues: CustForm = useMemo(
     () => defaultCustomer(currentCustomer),
@@ -55,23 +61,37 @@ export default function CustomerForm({ isEdit, currentCustomer }: Props) {
   const {
     handleSubmit,
     setFocus,
+    reset,
     formState: { errors },
   } = methods;
 
-  // useEffect(() => {
-  //   reset(defaultValues);
-  // }, [isEdit, currentCustomer]);
+  useErrorFocus({ errors, setFocus });
 
-  const onSubmit = async (data: CustForm) => {
+  useEffect(() => {
+    reset(defaultValues);
+  }, [isEdit, defaultValues, reset]);
+
+  const onSubmit = async (data: any) => {
     const FormData: CustomerWithAddress = { ...data, addresses: [...BillingAddresses.addresses] };
+
     try {
-      const res = await createCustomer(FormData);
-      enqueueSnackbar(res.message, { variant: res.type });
+      let res: NestCommonRes;
+      if (!isEdit) {
+        res = await createCustomer(FormData);
+      } else {
+        res = await editCustomer(FormData, customerId!);
+      }
+      enqueueSnackbar(res!.message, { variant: res!.type });
       navigate('/dashboard/customer/list');
     } catch (error) {
       enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
+
+  useEffect(() => {
+    if (defaultBillingAddresses !== undefined)
+      BillingAddresses.setAddresses(defaultBillingAddresses);
+  }, [defaultBillingAddresses]);
 
   return (
     <FormProvider methods={methods}>
@@ -99,7 +119,7 @@ export default function CustomerForm({ isEdit, currentCustomer }: Props) {
             <RHFTextField name="customerName" label="Customer Name" required />
           </Grid>
           <Grid item xs={12} md={6}>
-            <RHFTextField name="tradeName" label="Trade Name" required />
+            <RHFTextField name="customerBusinessName" label="Trade Name" required />
           </Grid>
           <Grid item xs={12} md={6}>
             <RHFPhoneNumber name="customerPhone" label="Phone" />
@@ -110,36 +130,13 @@ export default function CustomerForm({ isEdit, currentCustomer }: Props) {
           <Grid item xs={12} md={6}>
             <RHFTextField name="customerPAN" label="Customer PAN" />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <RHFSelect name="customerCategory" label="Customer Category" required>
-              {['', 'abdkj', 'ksdjnfkj'].map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </RHFSelect>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <RHFSelect name="country" label="Country" required>
-              {['', 'Canada', 'India'].map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </RHFSelect>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <RHFSelect name="state" label="State" required>
-              {['', 'Saskatchewan', 'Ontario'].map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </RHFSelect>
-          </Grid>
 
           <Grid item xs={12}>
-            <ButtonAccordion title="Address" sx={boxGridSx}>
+            <ButtonAccordion
+              title="Address"
+              sx={boxGridSx}
+              defaultOpen={defaultBillingAddresses && true}
+            >
               <AddressRow addressesObject={BillingAddresses} title="Add Billing Address" />
             </ButtonAccordion>
           </Grid>

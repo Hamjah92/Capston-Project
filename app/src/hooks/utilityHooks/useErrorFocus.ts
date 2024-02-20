@@ -12,6 +12,7 @@ export const useErrorFocus = ({ errors, setFocus }: Props) => {
     const firstError = (
       Object.keys(errors) as Array<keyof typeof errors>
     ).find((field) => {
+
       const fieldKey = field as keyof typeof errors;
       return errors[fieldKey] ? fieldKey : null
     });

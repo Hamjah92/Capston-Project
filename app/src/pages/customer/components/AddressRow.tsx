@@ -74,7 +74,7 @@ export const AddressRow: FC<Props> = ({ addressesObject, title }) => {
             <Box margin={1.2}>
               <Typography>{address.businessAddress}</Typography>
               <Typography>
-                {address.city}, {address.state.stateName}
+                {address.city}, {address.state}
               </Typography>
               <Typography>Pin: {address.pinCode}</Typography>
             </Box>

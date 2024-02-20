@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
-import { useCustomer } from 'src/hooks/myHooks/database/useCustomer';
+import { useSupplier } from 'src/hooks/myHooks/database/useSupplier';
 import { paths } from 'src/routes/paths';
 
 type Props = {
@@ -14,25 +14,25 @@ type Props = {
   row: Row<any>;
 };
 
-export const CustomerActions: FC<Props> = ({ handleCloseMenu, row }) => {
+export const SupplierActions: FC<Props> = ({ handleCloseMenu, row }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
 
   const {
-    original: { customerId },
+    original: { supplierId },
   } = row;
-  const { deleteCustomerByID } = useCustomer();
+  const { deleteSupplierByID } = useSupplier();
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: delCust } = useMutation({
-    mutationFn: deleteCustomerByID,
+  const { mutateAsync: delSupplier } = useMutation({
+    mutationFn: deleteSupplierByID,
     onSuccess: (data) => {
       enqueueSnackbar(data.message, { variant: data.type });
-      queryClient.invalidateQueries({ queryKey: ['customers'] });
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
     },
   });
 
@@ -53,7 +53,7 @@ export const CustomerActions: FC<Props> = ({ handleCloseMenu, row }) => {
         <Iconify icon="eva:trash-2-outline" />
         Delete
       </MenuItem>
-      <MenuItem onClick={() => navigate(paths.dashboard.customer.edit(customerId))}>
+      <MenuItem onClick={() => navigate(paths.dashboard.supplier.edit(supplierId))}>
         <Iconify icon="eva:edit-fill" />
         Edit
       </MenuItem>
@@ -68,7 +68,7 @@ export const CustomerActions: FC<Props> = ({ handleCloseMenu, row }) => {
             variant="contained"
             color="error"
             onClick={() => {
-              delCust(customerId);
+              delSupplier(supplierId);
               handleCloseMenu();
               handleCloseConfirm();
             }}

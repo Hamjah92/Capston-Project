@@ -11,8 +11,6 @@ export type Customer = {
   customerEmail: string;
   customerGST?: string;
   customerPAN?: string;
-  country: string;
-  state: string;
   status: boolean;
 };
 

@@ -33,6 +33,7 @@ export class CustomerDto {
   @IsEmail()
   customerEmail: string;
 
-  // @IsArray()
-  // addresses: Address[]
+  @IsArray()
+  @IsOptional()
+  addresses: Address[]
 }

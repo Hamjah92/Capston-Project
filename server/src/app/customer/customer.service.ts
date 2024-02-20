@@ -33,11 +33,11 @@ export class CustomerService {
       order: { createdAt: "DESC" }
     });
   }
-  async getById(customer_id: string) {
-    const customer = await this._findCustomer(customer_id)
-    const billingAddresses = await this._findAddresses(customer_id, "Billing")
+  async getById(customerId: string) {
+    const customer = await this._findCustomer(customerId)
+    const billingAddresses = await this._findAddresses(customerId, "Billing")
 
-    const shippingAddresses = await this._findAddresses(customer_id, "Shipping")
+    const shippingAddresses = await this._findAddresses(customerId, "Shipping")
     return { customer, billingAddresses, shippingAddresses }
   }
 
@@ -45,10 +45,10 @@ export class CustomerService {
   async createCustomer(createCustomerDto: CustomerDto) {
     const customer = new Customer()
     const { customerId, customerName } = await this._saveCustomer(customer, createCustomerDto, null);
-    // const addresses = createCustomerDto.addresses;
-    // for (const _custAddress of addresses) {
-    //   await this._saveAddress(customerId, _custAddress);
-    // }
+    const addresses = createCustomerDto.addresses;
+    for (const _custAddress of addresses) {
+      await this._saveAddress(customerId, _custAddress);
+    }
     return { message: `${customerName} add As customer Successfully`, type: 'success', status: true };
   }
 
@@ -56,21 +56,21 @@ export class CustomerService {
   async editCustomer(updatedCustomer: CustomerDto, customerId: string) {
     const customer = await this._findCustomer(customerId);
     await this._saveCustomer(customer, updatedCustomer, customerId);
-    // const addresses = updatedCustomer.addresses;
-    // await this._deleteCustomerAddresses(customerId)
-    // for (const _custAddress of addresses) {
-    //   await this._saveAddress(customerId, _custAddress);
-    // }
+    const addresses = updatedCustomer.addresses;
+    await this._deleteCustomerAddresses(customerId)
+    for (const _custAddress of addresses) {
+      await this._saveAddress(customerId, _custAddress);
+    }
     return { message: `Customer Updated Successfully`, type: 'success', status: true };
   }
   @MyTransaction()
-  async deleteCustomerById(customer_id: string) {
+  async deleteCustomerById(customerId: string) {
 
     const result = await this._queryRunner.manager.delete(Customer, {
-      customer_id,
+      customerId,
     });
     await this._queryRunner.manager.delete(CustomerAddress, {
-      customer_id
+      customerId
     })
     return { type: 'success', message: `${result.affected} customer deleted` }
   }
@@ -79,10 +79,10 @@ export class CustomerService {
   async deleteManyCustomer(customer_ids: string[]) {
 
     const result = await this._queryRunner.manager.delete(Customer, {
-      customer_id: In(customer_ids),
+      customerId: In(customer_ids),
     });
     await this._queryRunner.manager.delete(CustomerAddress, {
-      customer_id: In(customer_ids)
+      customerId: In(customer_ids)
     })
     return { type: 'success', message: `${result.affected} customer deleted` }
   }
@@ -111,17 +111,17 @@ export class CustomerService {
     if (!customerId) {
       await this._queryRunner.manager.save(Customer, customer);
     } else {
-      await this._queryRunner.manager.update(Customer, { customer_id: customerId }, customer);
+      await this._queryRunner.manager.update(Customer, { customerId: customerId }, customer);
     }
     return customer;
   }
 
-  private async _findAddresses(customer_id: string, type: 'Billing' | 'Shipping', select?: (keyof CustomerAddress)[]) {
+  private async _findAddresses(customerId: string, type: 'Billing' | 'Shipping', select?: (keyof CustomerAddress)[]) {
     if (!select) {
       select = ["addressId", "addressType", "businessAddress", "city", "pinCode", "state", "isDefault"]
     }
     const addresses = await this._addressRepository.find({
-      where: { customer_id: customer_id, address_type: type },
+      where: { customerId: customerId, addressType: type },
       select: select
     })
     return addresses.map((address) => {
@@ -133,14 +133,14 @@ export class CustomerService {
       select = ["customerName", "customerEmail", "customerPhone", "customerWhatsapp", "customerGST", "customerPAN", "customerBusinessName"]
     }
     return await this._customerRepository.findOneOrFail({
-      where: { customer_id: customerId },
+      where: { customerId: customerId },
       select: select
     })
   }
 
   private async _deleteCustomerAddresses(customerId: string) {
     await this._queryRunner.manager.delete(CustomerAddress, {
-      customer_id: customerId,
+      customerId: customerId,
     })
   }
 }
