@@ -37,8 +37,9 @@ export function RHFSelect({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <TextField
+          inputRef={ref}
           {...field}
           select
           fullWidth

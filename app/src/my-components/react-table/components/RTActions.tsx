@@ -18,16 +18,12 @@ type Props = {
 export const RTActions: FC<Props> = ({ Actions, row }) => {
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenMenuActions(event.currentTarget);
-  };
-
   const handleCloseMenu = () => setOpenMenuActions(null);
 
   return (
     <>
-      <IconButton onClick={handleOpenMenu}>
-        <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
+      <IconButton onClick={(event) => setOpenMenuActions(event.currentTarget)}>
+        <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
       </IconButton>
 
       <CustomPopover

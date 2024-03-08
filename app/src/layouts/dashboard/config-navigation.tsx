@@ -40,6 +40,8 @@ const ICONS = {
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
   customer: icon('ic_customer'),
+  purchases: icon('ic_purchases'),
+  tax: icon('ic_tax'),
 };
 
 // ----------------------------------------------------------------------
@@ -63,12 +65,30 @@ export function useNavData() {
             ],
           },
           {
+            title: 'Product',
+            path: paths.dashboard.product.root,
+            icon: ICONS.product,
+            children: [
+              { title: 'list', path: paths.dashboard.product.list },
+              { title: 'Add', path: paths.dashboard.product.add },
+            ],
+          },
+          {
             title: 'Supplier',
             path: paths.dashboard.supplier.root,
-            icon: ICONS.customer,
+            icon: ICONS.order,
             children: [
               { title: 'list', path: paths.dashboard.supplier.list },
               { title: 'Add', path: paths.dashboard.supplier.add },
+            ],
+          },
+          {
+            title: 'Purchases',
+            path: paths.dashboard.purchases.root,
+            icon: ICONS.purchases,
+            children: [
+              { title: 'list', path: paths.dashboard.purchases.list },
+              { title: 'Add', path: paths.dashboard.purchases.add },
             ],
           },
         ],
@@ -85,6 +105,15 @@ export function useNavData() {
             children: [
               { title: 'list', path: paths.dashboard.user.root },
               { title: 'Add', path: paths.dashboard.user.add },
+            ],
+          },
+          {
+            title: 'Tax',
+            path: paths.dashboard.tax.root,
+            icon: ICONS.tax,
+            children: [
+              { title: 'list', path: paths.dashboard.tax.root },
+              { title: 'Add', path: paths.dashboard.tax.add },
             ],
           },
         ],

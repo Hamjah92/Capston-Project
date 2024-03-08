@@ -4,13 +4,13 @@ import { FC } from 'react';
 import TableNoData from 'src/components/table/table-no-data';
 
 type Props = {
-  RowModel: RowModel<any>;
+  RowModelData: RowModel<any>;
 };
 
-export const RTBody: FC<Props> = ({ RowModel }) => (
+export const RTBody: FC<Props> = ({ RowModelData }) => (
   <TableBody>
     <>
-      {RowModel.rows.map((row) => (
+      {RowModelData.rows.map((row) => (
         <TableRow key={row.id}>
           {row.getVisibleCells().map((cell) => (
             <TableCell align="center" key={cell.id}>
@@ -19,7 +19,7 @@ export const RTBody: FC<Props> = ({ RowModel }) => (
           ))}
         </TableRow>
       ))}
-      <TableNoData notFound={RowModel.rows.length < 1} />
+      <TableNoData notFound={RowModelData.rows.length < 1} />
     </>
   </TableBody>
 );

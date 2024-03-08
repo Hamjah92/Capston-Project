@@ -10,7 +10,6 @@ export class SupplierService {
   private readonly _supplierRepository: Repository<Supplier>;
   protected readonly connection: Connection;
   private readonly _queryRunner: QueryRunner;
-  private readonly test: string;
 
   constructor(@Inject(CONNECTION) connection: Connection) {
     this.connection = connection;

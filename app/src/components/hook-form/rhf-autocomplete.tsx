@@ -35,12 +35,13 @@ export function RHFAutocomplete<
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <Autocomplete
           {...field}
           onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
           renderInput={(params) => (
             <TextField
+              inputRef={ref}
               label={label}
               placeholder={placeholder}
               error={!!error}

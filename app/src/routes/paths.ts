@@ -34,5 +34,23 @@ export const paths = {
       add: `${ROOTS.DASHBOARD}/supplier/add`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/supplier/edit/${id}`,
     },
+    product: {
+      root: `${ROOTS.DASHBOARD}/product`,
+      list: `${ROOTS.DASHBOARD}/product/list`,
+      add: `${ROOTS.DASHBOARD}/product/add`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/product/edit/${id}`,
+    },
+    purchases: {
+      root: `${ROOTS.DASHBOARD}/purchases`,
+      list: `${ROOTS.DASHBOARD}/purchases/list`,
+      add: `${ROOTS.DASHBOARD}/purchases/add`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/purchases/edit/${id}`,
+    },
+    tax: {
+      root: `${ROOTS.DASHBOARD}/tax`,
+      list: `${ROOTS.DASHBOARD}/tax/list`,
+      add: `${ROOTS.DASHBOARD}/tax/add`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/tax/edit/${id}`,
+    },
   },
 };

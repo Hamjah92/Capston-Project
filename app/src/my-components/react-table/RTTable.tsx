@@ -76,7 +76,7 @@ export const RTTable: FC<Props> = ({
         <Scrollbar>
           <Table size={isDense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
             <RTHeader HeaderGroups={getHeaderGroups()} sx={sx} />
-            <RTBody RowModel={getRowModel()} />
+            <RTBody RowModelData={getRowModel()} />
           </Table>
         </Scrollbar>
       </TableContainer>

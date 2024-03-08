@@ -26,7 +26,7 @@ export function RHFRadioGroup({ row, name, label, options, spacing, helperText, 
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <FormControl component="fieldset">
           {label && (
             <FormLabel component="legend" id={labelledby} sx={{ typography: 'body2' }}>
@@ -37,6 +37,7 @@ export function RHFRadioGroup({ row, name, label, options, spacing, helperText, 
           <RadioGroup {...field} aria-labelledby={labelledby} row={row} {...other}>
             {options.map((option) => (
               <FormControlLabel
+                inputRef={ref}
                 key={option.value}
                 value={option.value}
                 control={<Radio />}

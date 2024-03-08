@@ -1,8 +1,8 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useEffect } from 'react';
 import { privateApi } from 'src/utils/axios';
-import { useRefreshToken } from './useRefreshToken';
 import { useAuthContext } from 'src/auth/hooks/use-auth-context';
+import { useRefreshToken } from './useRefreshToken';
 
 export const usePrivateApi = () => {
   const refresh = useRefreshToken();
@@ -41,12 +41,9 @@ export const usePrivateApi = () => {
           localStorage.setItem('accessToken', accessToken);
           prevRequest.headers.Authorization = `Bearer ${accessToken}`;
           return privateApi(prevRequest);
-        } else {
-          if (error?.response?.status === 403 || error?.response?.status === 401) {
-            logout();
-          }
-          return Promise.reject(error);
         }
+        return Promise.reject(error);
+
       }
     );
 

@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 const optionalString = Yup.string().optional();
 
+// customer
 export const NewCustomerSchema = Yup.object().shape({
   customerName: Yup.string().required('Name is required'),
   customerEmail: Yup.string().required('Email is required').email(),
@@ -11,7 +12,7 @@ export const NewCustomerSchema = Yup.object().shape({
   customerPAN: optionalString,
 });
 
-// 
+// supplier
 
 export const NewSupplierSchema = Yup.object().shape({
   supplierName: Yup.string().required('Name is required'),
@@ -21,7 +22,7 @@ export const NewSupplierSchema = Yup.object().shape({
 });
 
 
-// 
+//  address
 export const NewAddressSchema = Yup.object().shape({
   addressId: Yup.string().required("Address Is is needed"),
   businessAddress: Yup.string().required('Address is required'),
@@ -30,4 +31,13 @@ export const NewAddressSchema = Yup.object().shape({
   isDefault: Yup.boolean().default(false),
   state: Yup.string().required(),
   city: Yup.string().required('city is required'),
-}) 
+})
+
+
+// tax
+
+export const newTaxSlabSchema = Yup.object().shape({
+  taxName: Yup.string().required("Tax Name Is Required"),
+  taxRate: Yup.string().required("Tax is Required"),
+  taxType: Yup.string().required("Tax type is Required"),
+})

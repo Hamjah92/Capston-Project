@@ -12,6 +12,8 @@ import { TenancyModule } from './public/tenancy/tenancy.module';
 import { TenantsModule } from './public/tenants/tenants.module';
 import { CustomerModule } from './app/customer/customer.module';
 import { SupplierModule } from './app/supplier/supplier.module';
+import { TaxModule } from './app/tax/tax.module';
+import { ItemsModule } from './app/items/items.module';
 
 
 @Module({
@@ -25,11 +27,13 @@ import { SupplierModule } from './app/supplier/supplier.module';
       },
     }),
     UserModule,
+    ItemsModule,
     TenantsModule,
     CustomerModule,
     TenancyModule,
     AuthModule,
     SupplierModule,
+    TaxModule,
   ],
   providers: [{
     provide: APP_GUARD,

@@ -1,6 +1,7 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { FC, MouseEventHandler } from 'react';
 import BoxCss from './box.module.css';
+
 type Props = {
   sx?: SxProps<Theme>;
   title: string;

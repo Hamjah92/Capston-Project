@@ -15,7 +15,11 @@ export const ButtonAccordion: FC<Props> = ({ title, children, sx, defaultOpen = 
   const handleClick = () => setIsOpen(!isOpen);
   return (
     <Stack>
-      <Button onClick={handleClick} sx={{ margin: 2, justifyContent: 'flex-start' }}>
+      <Button
+        color="primary"
+        onClick={handleClick}
+        sx={{ margin: 2, justifyContent: 'flex-start' }}
+      >
         {isOpen ? (
           <Icon icon="akar-icons:minus" width="26" height="26" />
         ) : (

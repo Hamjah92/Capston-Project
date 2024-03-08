@@ -22,6 +22,15 @@ const SupplierList = lazy(() => import('src/pages/supplier/SupplierList'));
 const AddSupplier = lazy(() => import('src/pages/supplier/AddSupplier'));
 const EditSupplier = lazy(() => import('src/pages/supplier/EditSupplier'));
 
+// tax
+
+const AddTaxSlab = lazy(() => import('src/pages/settings/tax/AddTaxSlab'));
+const TaxSlabLIst = lazy(() => import('src/pages/settings/tax/TaxSlabLIst'));
+
+// product
+const ProductsList = lazy(() => import('src/pages/product/ProductsList'));
+const AddProduct = lazy(() => import('src/pages/product/AddProduct'));
+
 // ----------------------------------------------------------------------
 
 export const dashboardRoutes = [
@@ -43,8 +52,17 @@ export const dashboardRoutes = [
         children: [
           { element: <CustomerList />, index: true },
           { path: 'list', element: <CustomerList /> },
-          { path: 'Add', element: <AddCustomer /> },
+          { path: 'add', element: <AddCustomer /> },
           { path: 'edit/:customerId', element: <EditCustomer /> },
+        ],
+      },
+      {
+        path: 'product',
+        children: [
+          { element: <ProductsList />, index: true },
+          { path: 'list', element: <ProductsList /> },
+          { path: 'add', element: <AddProduct /> },
+          // { path: 'edit/:productId', element: <EditCustomer /> },
         ],
       },
       {
@@ -52,8 +70,17 @@ export const dashboardRoutes = [
         children: [
           { element: <SupplierList />, index: true },
           { path: 'list', element: <SupplierList /> },
-          { path: 'Add', element: <AddSupplier /> },
+          { path: 'add', element: <AddSupplier /> },
           { path: 'edit/:supplierId', element: <EditSupplier /> },
+        ],
+      },
+      {
+        path: 'tax',
+        children: [
+          { element: <TaxSlabLIst />, index: true },
+          { path: 'list', element: <TaxSlabLIst /> },
+          { path: 'add', element: <AddTaxSlab /> },
+          // { path: 'edit/:supplierId', element: <EditSupplier /> },
         ],
       },
     ],
