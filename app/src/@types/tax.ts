@@ -1,9 +1,9 @@
 type TaxType = {
-  taxId: string
+  id: number
   taxName: string,
   taxRate: string
   taxType: string,
 }
 
-type AddTaxType = Omit<TaxType, "taxId">
+type AddTaxType = Omit<TaxType, "id">
 

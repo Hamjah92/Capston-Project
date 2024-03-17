@@ -13,7 +13,7 @@ import { TenantsModule } from './public/tenants/tenants.module';
 import { CustomerModule } from './app/customer/customer.module';
 import { SupplierModule } from './app/supplier/supplier.module';
 import { TaxModule } from './app/tax/tax.module';
-import { ItemsModule } from './app/items/items.module';
+import { ProductModule } from './app/product/product.module';
 
 
 @Module({
@@ -27,13 +27,13 @@ import { ItemsModule } from './app/items/items.module';
       },
     }),
     UserModule,
-    ItemsModule,
     TenantsModule,
     CustomerModule,
     TenancyModule,
     AuthModule,
     SupplierModule,
     TaxModule,
+    ProductModule,
   ],
   providers: [{
     provide: APP_GUARD,

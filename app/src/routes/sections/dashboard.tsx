@@ -25,6 +25,7 @@ const EditSupplier = lazy(() => import('src/pages/supplier/EditSupplier'));
 // tax
 
 const AddTaxSlab = lazy(() => import('src/pages/settings/tax/AddTaxSlab'));
+const EditTaxSlab = lazy(() => import('src/pages/settings/tax/EditTaxSlab'));
 const TaxSlabLIst = lazy(() => import('src/pages/settings/tax/TaxSlabLIst'));
 
 // product
@@ -80,7 +81,7 @@ export const dashboardRoutes = [
           { element: <TaxSlabLIst />, index: true },
           { path: 'list', element: <TaxSlabLIst /> },
           { path: 'add', element: <AddTaxSlab /> },
-          // { path: 'edit/:supplierId', element: <EditSupplier /> },
+          { path: 'edit/:taxId', element: <EditTaxSlab /> },
         ],
       },
     ],

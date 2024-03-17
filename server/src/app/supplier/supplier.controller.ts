@@ -25,8 +25,8 @@ export class SupplierController {
   @Put('edit/:supplierId')
   editSupplier(@Param('supplierId') supplierId: string, @Body() supplier: SupplierDto) {
     console.log(supplierId);
-    
-    return this._supplierService.editSupplier(supplier,supplierId)
+
+    return this._supplierService.editSupplier(supplier, supplierId)
   }
 
 

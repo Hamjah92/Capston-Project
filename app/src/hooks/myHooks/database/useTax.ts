@@ -1,5 +1,7 @@
 import { NestCommonRes } from "src/@types/https";
 import { useSnackbar } from "src/components/snackbar";
+import { Row } from "@tanstack/react-table";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePrivateApi } from "../usePrivateApi";
 
 
@@ -25,6 +27,12 @@ export const useTax = () => {
     }
   };
 
+  const getTaxById = async (id: string) => {
+
+    const { data } = await privateApi.get(`/tax/${id}`);
+    return Promise.resolve(data);
+  };
+
   const createTaxSlab = async (formData: TaxType) => {
     const { data } = await privateApi.post('/tax/create', formData);
     return Promise.resolve(data as NestCommonRes);
@@ -36,5 +44,42 @@ export const useTax = () => {
   };
 
 
-  return { defaultTax, createTaxSlab, getAllTaxSlab, editTaxSlab }
+  const deleteManyTax = async (selectedFlatRows: Row<any>[]) => {
+    const taxIds = selectedFlatRows.map((row) => row.original.id);
+    const { data } = await privateApi.delete(`/tax/deleteMany`, {
+      data: { taxIds },
+    });
+    return data;
+  };
+
+  const deleteTaxByID = async (taxId: number) => {
+    console.log(taxId);
+
+    const { data } = await privateApi.delete(`/tax/delete/${taxId}`);
+    return data as NestCommonRes;
+  };
+
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: delTax } = useMutation({
+    mutationFn: deleteTaxByID,
+    onSuccess: (data) => {
+      enqueueSnackbar(data.message, { variant: data.type ?? 'info' });
+      queryClient.invalidateQueries({ queryKey: ['taxes'] });
+    },
+  });
+
+
+  const { mutateAsync: deleteMany } = useMutation({
+    mutationFn: deleteManyTax,
+    onSuccess: (data) => {
+      enqueueSnackbar(data.message, { variant: data.type });
+
+      queryClient.invalidateQueries({ queryKey: ["taxes"] });
+    },
+  });
+
+
+  return { defaultTax, createTaxSlab, getAllTaxSlab, editTaxSlab, delTax, deleteMany, getTaxById }
 }

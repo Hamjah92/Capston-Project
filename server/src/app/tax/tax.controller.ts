@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { TaxService } from './tax.service';
 import { TaxDto } from './dto/tax.dto';
 
@@ -10,15 +10,15 @@ export class TaxController {
   }
 
 
-  // @Get('all')
-  // getAll() {
-  //   return this._taxService.getAll();
-  // }
+  @Get('all')
+  getAll() {
+    return this._taxService.getAll();
+  }
 
-  // @Get(':taxId')
-  // getByID(@Param('taxId') taxId: string) {
-  //   return this._taxService.getById(taxId);
-  // }
+  @Get(':taxId')
+  getByID(@Param('taxId') taxId: number) {
+    return this._taxService.getById(taxId);
+  }
 
   
   @Post('/create')
@@ -26,9 +26,21 @@ export class TaxController {
     return this._taxService.createTax(createTaxDto)
   }
 
-  // @Put('edit/:taxId')
-  // editTax(@Param('taxId') taxId: string, @Body() tax: taxDto) {
-  //   return this._taxService.editTax(tax,taxId)
-  // }
+  @Put('edit/:taxId')
+  editTax(@Param('taxId') taxId: number, @Body() tax: TaxDto) {
+    return this._taxService.editTax(tax,taxId)
+  }
+
+  
+
+  @Delete('delete/:tax_id')
+  deleteTaxById(@Param('tax_id') tax_id: number) {
+    return this._taxService.deleteTaxById(tax_id);
+  }
+
+  @Delete('deleteMany')
+  deleteManyTax(@Body('taxIds') tax_ids: number[]) {
+    return this._taxService.deleteManyTax(tax_ids)
+  }
 
 }

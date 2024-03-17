@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Connection, QueryRunner, Repository } from 'typeorm';
+import { Connection, In, QueryRunner, Repository } from 'typeorm';
 import { Tax } from './entity/tax.entity';
 import { CONNECTION } from 'src/public/tenancy/tenancy.provider';
 import { TaxDto } from './dto/tax.dto';
@@ -17,6 +17,23 @@ export class TaxService {
     this._taxRepository = connection.getRepository(Tax);
   }
 
+  async getAll() {
+    return await this._taxRepository.find({
+      select: [
+        'id',
+        'taxName',
+        'taxRate',
+        'taxType',
+      ]
+    });
+  }
+
+  async getById(id: number) {
+    const tax = await this._findTax(id)
+    return { tax }
+  }
+
+
   async createTax(taxDTo: TaxDto): Promise<NestCommonRes> {
     try {
 
@@ -26,6 +43,32 @@ export class TaxService {
     } catch (error) {
       return { message: error.massage, status: false, type: "error" }
     }
+  }
+
+  async editTax(updatedTax: TaxDto, id: number) {
+    const tax = await this._findTax(id);
+    await this._saveTax(tax, updatedTax);
+    return { message: `tax Updated Successfully`, type: 'success', status: true };
+  }
+
+
+  async deleteTaxById(id: number) {
+    console.log(id);
+    
+    const result = await this._queryRunner.manager.delete(Tax, {
+      id,
+    });
+
+    return { type: 'success', message: `${result.affected} tax deleted` }
+  }
+
+  async deleteManyTax(tax_ids: number[]) {
+
+    const result = await this._queryRunner.manager.delete(Tax, {
+      id: In(tax_ids)
+    });
+
+    return { type: 'success', message: `${result.affected} tax deleted` }
   }
 
   private async _saveTax(tax: Tax, taxDto: TaxDto, id: number | null = null) {
@@ -40,6 +83,17 @@ export class TaxService {
     }
 
     return tax;
+  }
+
+  private async _findTax(id: number, select?: (keyof Tax)[]) {
+    if (!select) {
+      select = ["taxName", "taxRate", "taxType", "id"]
+    }
+    return await this._taxRepository.findOneOrFail({
+      where: { id },
+      select: select
+    })
+
   }
 
 }

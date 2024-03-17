@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 import { Dayjs } from 'dayjs';
 import { FC, useState } from 'react';
-import { RHFAutocomplete } from 'src/components/hook-form';
 import RFHDatePicker from 'src/components/hook-form/RFHDatePicker';
+import { RHFAutoCompleteObject } from 'src/components/hook-form/RHFAutoCompleteObject';
 import { MuiTabPanel } from 'src/my-components/common/ui/MuiTabPanel';
 
 const units = [
@@ -29,24 +29,32 @@ export const AdditionalDetails: FC<Props> = ({ value, index }) => {
     <MuiTabPanel value={value} index={index}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={3}>
-          <RHFAutocomplete
+          <RHFAutoCompleteObject
+            optionLabel="name"
             name="productCategory"
             label="Product Category"
             options={productCategory}
           />
         </Grid>
         <Grid item xs={12} md={3}>
-          <RHFAutocomplete
+          <RHFAutoCompleteObject
+            optionLabel="name"
             name="productSubCategory"
             label="Product Sub Category"
             options={productCategory}
           />
         </Grid>
         <Grid item xs={12} md={3}>
-          <RHFAutocomplete name="supplyType" label="Supply Type" options={productCategory} />
+          <RHFAutoCompleteObject
+            optionLabel="name"
+            name="supplyType"
+            label="Supply Type"
+            options={productCategory}
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <RHFAutocomplete
+          <RHFAutoCompleteObject
+            optionLabel="name"
             name="supplyCategory"
             label="Supply Category"
             options={productCategory}
