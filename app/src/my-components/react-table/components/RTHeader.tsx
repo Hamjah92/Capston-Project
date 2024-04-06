@@ -1,13 +1,23 @@
-import { SxProps, TableCell, TableHead, TableRow, TableSortLabel, Theme } from '@mui/material';
-import { flexRender, HeaderGroup } from '@tanstack/react-table';
+import {
+  SxProps,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  TextField,
+  Theme,
+} from '@mui/material';
+import { flexRender, HeaderGroup, Table } from '@tanstack/react-table';
 import { FC } from 'react';
+import { Filter } from './a';
 
 type Props = {
   HeaderGroups: HeaderGroup<any>[];
   sx?: SxProps<Theme>;
+  table: Table<any>;
 };
 
-export const RTHeader: FC<Props> = ({ HeaderGroups, sx }) => {
+export const RTHeader: FC<Props> = ({ HeaderGroups, sx, table }) => {
   const renderHeader = (header: any) => {
     if (header.isPlaceholder) {
       return null;
@@ -39,6 +49,11 @@ export const RTHeader: FC<Props> = ({ HeaderGroups, sx }) => {
           {headerGroup.headers.map((header) => (
             <TableCell align="center" key={header.id}>
               {renderHeader(header)}
+              {header.column.getCanFilter() ? (
+                <div>
+                  <Filter column={header.column} table={table} />
+                </div>
+              ) : null}
             </TableCell>
           ))}
         </TableRow>

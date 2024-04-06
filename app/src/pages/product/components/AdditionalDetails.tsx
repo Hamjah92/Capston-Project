@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import { Dayjs } from 'dayjs';
 import { FC, useState } from 'react';
-import RFHDatePicker from 'src/components/hook-form/RFHDatePicker';
 import { RHFAutoCompleteObject } from 'src/components/hook-form/RHFAutoCompleteObject';
 import { MuiTabPanel } from 'src/my-components/common/ui/MuiTabPanel';
+import { RHFDatePicker } from 'src/components/hook-form/RFHDatePicker';
 
 const units = [
   { name: 'KG', value: 'kg' },
@@ -61,26 +61,10 @@ export const AdditionalDetails: FC<Props> = ({ value, index }) => {
           />
         </Grid>
         <Grid item xs={12} md={3}>
-          <RFHDatePicker
-            disableFuture
-            name="activeFrom"
-            setValue={setDateValue}
-            openTo="day"
-            views={['year', 'month', 'day']}
-            dateValue={dateValue}
-            label="Active from"
-          />
+          <RHFDatePicker name="activeFrom" label="Active from" />
         </Grid>
         <Grid item xs={12} md={3}>
-          <RFHDatePicker
-            disableFuture
-            name="expireOn"
-            setValue={setDateValue}
-            openTo="day"
-            views={['year', 'month', 'day']}
-            dateValue={dateValue}
-            label="Expire on"
-          />{' '}
+          <RHFDatePicker name="expireOn" label="Expire on" />{' '}
         </Grid>
       </Grid>
     </MuiTabPanel>

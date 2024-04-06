@@ -1,4 +1,5 @@
 export type SupplierType = {
+  id?: number;
   supplierId: string;
   supplierName: string;
   supplierPhone: string;

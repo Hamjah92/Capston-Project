@@ -8,14 +8,14 @@ import { useGeneral } from 'src/hooks/myHooks/database/useGeneral';
 import { FormProvider, RHFTextField } from 'src/components/hook-form';
 import { NewAddressSchema } from '../../../validation/yupValidation';
 import { boxGridSx } from '../../../utils/CommonSX';
-import { Address, AddressType } from '../../../@types/address';
+import { AddressType, IAddress } from '../../../@types/address';
 
 type Props = {
-  defaultAddress: Address | null;
+  defaultAddress: IAddress | null;
   addressType: AddressType;
   handleCloseModal: () => void;
-  addAddress: (address: Address) => void;
-  editAddress: (address: Address) => void;
+  addAddress: (address: IAddress) => void;
+  editAddress: (address: IAddress) => void;
   removeAddress: (address_id: string) => void;
 };
 

@@ -1,51 +1,41 @@
-import { CalendarPickerView, DatePicker, LocalizationProvider } from '@mui/lab';
-import { TextField } from '@mui/material';
-import { Dayjs } from 'dayjs';
-import { Dispatch, SetStateAction } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
+// MUI imports
+// Date picker imports
+import { LocalizationProvider, DatePicker, DatePickerProps } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
-type RFHDatePickerTypes = {
+type RHFDatePickerProps = {
   name: string;
-  dateValue?: any;
   label: string;
-  openTo?: CalendarPickerView;
-  views?: any;
-  disableFuture?: boolean;
-  setValue: Dispatch<SetStateAction<Dayjs | null | undefined>>;
-};
+  size?: 'small' | 'medium';
+} & DatePickerProps<any>;
 
-function RFHDatePicker({
-  dateValue,
-  name,
-  label,
-  openTo,
-  views,
-  setValue,
-  ...other
-}: RFHDatePickerTypes): JSX.Element {
+export function RHFDatePicker({ name, label, size = 'small', ...other }: RHFDatePickerProps) {
   const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field: { ref, ...rest }, fieldState: { error } }) => (
-        // <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label={label}
-          openTo={openTo}
-          views={views}
-          inputFormat="DD/MM/YYYY"
-          value={dateValue}
-          {...other}
-          onChange={(newValue: any) => {
-            setValue(newValue);
-          }}
-          renderInput={(params: any) => <TextField {...params} />}
-        />
-        // </LocalizationProvider>
+      render={({ field: { ref, value, ...rest }, fieldState: { error } }) => (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                label,
+                error: !!error,
+                helperText: error?.message,
+                size,
+              },
+            }}
+            value={value ? dayjs(value) : null} // Ensure value is converted to dayjs object or null
+            {...other}
+            {...rest}
+          />
+        </LocalizationProvider>
       )}
     />
   );
 }
-
-export default RFHDatePicker;

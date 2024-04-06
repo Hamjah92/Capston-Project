@@ -14,6 +14,9 @@ import { CustomerModule } from './app/customer/customer.module';
 import { SupplierModule } from './app/supplier/supplier.module';
 import { TaxModule } from './app/tax/tax.module';
 import { ProductModule } from './app/product/product.module';
+import { PurchaseModule } from './app/purchase/purchase.module';
+import { InvoiceModule } from './app/invoice/invoice.module';
+import { ReportModule } from './app/report/report.module';
 
 
 @Module({
@@ -34,6 +37,9 @@ import { ProductModule } from './app/product/product.module';
     SupplierModule,
     TaxModule,
     ProductModule,
+    PurchaseModule,
+    InvoiceModule,
+    ReportModule,
   ],
   providers: [{
     provide: APP_GUARD,

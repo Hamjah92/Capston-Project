@@ -20,6 +20,7 @@ type RHFSelectProps = TextFieldProps & {
   maxHeight?: boolean | number;
   children: React.ReactNode;
   PaperPropsSx?: SxProps<Theme>;
+  size?: 'small' | 'medium';
 };
 
 export function RHFSelect({
@@ -29,6 +30,7 @@ export function RHFSelect({
   helperText,
   children,
   PaperPropsSx,
+  size = 'small',
   ...other
 }: RHFSelectProps) {
   const { control } = useFormContext();
@@ -43,6 +45,7 @@ export function RHFSelect({
           {...field}
           select
           fullWidth
+          size={size}
           SelectProps={{
             native,
             MenuProps: {

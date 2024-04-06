@@ -50,5 +50,10 @@ export const useGeneral = () => {
     state: address?.state || '',
   });
 
-  return { getState, getPinData, getUnit, getHsn, getGSTChapter, getInitialAddress }
+  const getReport = async () => {
+    const { data } = await privateApi.get('/dashboard/overview');
+    return data;
+  };
+
+  return { getState, getPinData, getUnit, getHsn, getGSTChapter, getInitialAddress, getReport }
 }

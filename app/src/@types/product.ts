@@ -9,7 +9,7 @@ export type ProductType = {
   productDescription: string;
   productCode: string
   discount: string
-  discountIn: object | null
+  discountIn: object | string | null
   salesUnit: object | null;
   salesPrice: string;
   purchaseUnit: object | null;
@@ -19,7 +19,9 @@ export type ProductType = {
   lowStockReminder: number
   availableQuantity: number
 
-  tax: string
+  salesTax: any[] | string | null
+  purchaseTax: any[] | string | null
+
   taxesInclusive: boolean
   isFree: boolean
 }

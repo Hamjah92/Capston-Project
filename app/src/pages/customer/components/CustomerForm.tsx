@@ -17,9 +17,9 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import { ButtonAccordion } from 'src/my-components/common/button/ButtonAccordion';
 
 import { RHFSubmitButton } from 'src/components/hook-form/RHFSubmitButton';
-import { Address } from 'src/@types/address';
 import { NestCommonRes } from 'src/@types/https';
 
+import { IAddress } from 'src/@types/address';
 import {
   FormProvider,
   RHFTextField,
@@ -36,7 +36,7 @@ import { CustForm, CustomerWithAddress } from '../../../@types/customer';
 type Props = {
   isEdit: boolean;
   currentCustomer?: CustForm;
-  defaultBillingAddresses?: Address[];
+  defaultBillingAddresses?: IAddress[];
 };
 
 export default function CustomerForm({ isEdit, currentCustomer, defaultBillingAddresses }: Props) {

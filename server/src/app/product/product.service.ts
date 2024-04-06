@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ProductEntity } from './entity/product.entity'; // Assuming you have a Product entity
 import { Connection, In, QueryRunner, Repository } from 'typeorm';
 import { CONNECTION } from 'src/public/tenancy/tenancy.provider';
-import { MyTransaction } from 'src/common/decorators/Transaction.decorator';
 import { AddProductDTO } from './dto/product.dto';
 
 @Injectable()
@@ -13,7 +12,7 @@ export class ProductService {
 
   constructor(@Inject(CONNECTION) connection: Connection) {
     this.connection = connection;
-    this.queryRunner = connection.createQueryRunner();
+    this.queryRunner = connection.createQueryRunner()
     this.productRepository = connection.getRepository(ProductEntity);
   }
 
@@ -21,8 +20,7 @@ export class ProductService {
     return 'Prod' + new Date().getTime();
   }
 
-  @MyTransaction()
-  async deleteManyProducts(productIds: string[]) {
+  async deleteManyProducts(productIds: string[]) {    
     const result = await this.queryRunner.manager.delete(ProductEntity, {
       productId: In(productIds)
     });
@@ -32,10 +30,14 @@ export class ProductService {
   async getAll() {
     return await this.productRepository.find({
       select: [
+        "productId",
         "productName",
         "productCode",
         "availableQuantity",
-        "salesPrice"
+        "salesPrice",
+        "purchaseTax",
+        "salesTax",
+        "purchasePrice"
       ],
       order: { productName: "ASC" }
     });
@@ -43,6 +45,8 @@ export class ProductService {
 
   async getById(productId: string) {
     const product = await this._findProduct(productId);
+    product.salesTax =  product.salesTax ? JSON.parse(product.salesTax) : null;
+    product.purchaseTax =  product.salesTax ? JSON.parse(product.purchaseTax) : null;
     return { product };
   }
 
@@ -63,8 +67,10 @@ export class ProductService {
     return { type: 'success', message: `${result.affected} product deleted` };
   }
 
-  private async _saveProduct(product: ProductEntity, productDto: AddProductDTO) {
+  private async _saveProduct(product: ProductEntity, productDto: AddProductDTO, productId: string = null) {
     // Directly map fields from DTO to Entity
+    product.productId = productId ?? this.productIdPrefix();
+
     product.productName = productDto.productName;
     product.productDescription = productDto.productDescription;
     product.productCode = productDto.productCode;
@@ -80,10 +86,10 @@ export class ProductService {
 
     product.openingQuantity = productDto.openingQuantity;
     product.lowStockReminder = productDto.lowStockReminder;
-    product.availableQuantity = productDto.availableQuantity;
+    product.availableQuantity = productDto.openingQuantity;
 
-    product.tax = productDto.SalesTax;
-    product.tax = productDto.PurchaseTax;
+    product.salesTax = JSON.stringify(productDto.salesTax);
+    product.purchaseTax = JSON.stringify(productDto.purchaseTax);
     product.taxesInclusive = productDto.taxesInclusive;
     product.isFree = productDto.isFree;
 

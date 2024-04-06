@@ -30,9 +30,7 @@ const EditSupplier: FC<Props> = () => {
     queryKey: [`suppliers/${supplierId}`],
     queryFn: async () => getSupplierById(supplierId!),
     initialData: [],
-    refetchOnWindowFocus: false,
   });
-
   const isEdit = pathname.includes('edit');
 
   return (

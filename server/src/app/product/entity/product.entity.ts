@@ -37,25 +37,24 @@ export class ProductEntity extends BaseEntity {
   @Column({ default: '0' })
   discount: string
 
-  @Column({ default: '%' })
-  discountIn: '%' | 'fix'
+  @Column({ default: "percentage" })
+  discountIn: 'percentage' | 'fix'
 
 
   @Column({ default: false })
   taxesInclusive: boolean
 
-  @Column()
+  @Column({ nullable: true })
   salesTax: string
 
-  @Column()
-  productTax: string
+  @Column({ nullable: true })
+  purchaseTax: string
 
   @Column({ type: "float", default: "0" })
   openingQuantity: number
   
   @Column({ type: "float", nullable: true })
   lowStockReminder: number
-
 
   @Column({ type: "float", default: "0" })
   availableQuantity: number

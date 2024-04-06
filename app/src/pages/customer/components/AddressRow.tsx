@@ -4,26 +4,26 @@ import { Icon } from '@iconify/react';
 import { Radio, Stack, SxProps, Typography, IconButton, Button, Box } from '@mui/material';
 import { AnimatedDottedBox } from 'src/my-components/common/AnimatedBox/AnimatedDottedBox';
 import { RenderIf } from 'src/my-components/common/RenderIf';
-import { Address, AddressType } from '../../../@types/address';
+import { AddressType, IAddress } from '../../../@types/address';
 
 import { AddressModal } from './AddressModal';
 
 type Props = {
   title: string;
   addressesObject: {
-    addAddress: (address: Address) => void;
-    addresses: Address[];
+    addAddress: (address: IAddress) => void;
+    addresses: IAddress[];
     removeAddress: (address_id: string) => void;
-    editAddress: (address: Address) => void;
+    editAddress: (address: IAddress) => void;
     changeDefaultAddress: (address_id: string) => void;
-    getAddressById: (address_id: string) => Address | undefined;
+    getAddressById: (address_id: string) => IAddress | undefined;
     addressType: AddressType;
   };
 };
 
 export const AddressRow: FC<Props> = ({ addressesObject, title }) => {
   const theme = useTheme();
-  const [addressForEdit, setAddressForEdit] = useState<Address | null>(null);
+  const [addressForEdit, setAddressForEdit] = useState<IAddress | null>(null);
   const [open, setOpen] = useState(false);
   const handelClose = () => {
     setAddressForEdit(null);
@@ -38,7 +38,7 @@ export const AddressRow: FC<Props> = ({ addressesObject, title }) => {
   const AddressFunctions = { addAddress, editAddress, addressType, removeAddress };
   const style: SxProps = { backgroundColor: 'rgb(245,245,245)', p: 1, borderRadius: '10px' };
 
-  const handleEdit = (address: Address) => {
+  const handleEdit = (address: IAddress) => {
     setAddressForEdit(address);
     setOpen(true);
   };

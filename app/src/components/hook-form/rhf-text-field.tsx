@@ -6,9 +6,10 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 
 type Props = TextFieldProps & {
   name: string;
+  size?: 'small' | 'medium';
 };
 
-export function RHFTextField({ name, helperText, type, ...other }: Props) {
+export function RHFTextField({ name, helperText, type, size = 'small', ...other }: Props) {
   const { control } = useFormContext();
 
   return (
@@ -19,6 +20,7 @@ export function RHFTextField({ name, helperText, type, ...other }: Props) {
         <TextField
           {...field}
           fullWidth
+          size={size}
           type={type}
           inputRef={ref}
           value={type === 'number' && field.value === 0 ? '' : field.value}

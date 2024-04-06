@@ -2,7 +2,7 @@ import { NestCommonRes } from 'src/@types/https';
 import { AddSupplierType, SupplierType } from 'src/@types/supplier';
 import { useSnackbar } from 'src/components/snackbar';
 import { Row } from '@tanstack/react-table';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePrivateApi } from '../usePrivateApi';
 
 
@@ -75,6 +75,12 @@ export const useSupplier = () => {
     return Promise.resolve(data);
   };
 
+  const supplierQuery = useQuery({
+    queryKey: ['suppliers'],
+    queryFn: getAllSuppliers,
+    initialData: [],
+    refetchOnWindowFocus: false,
+  });
 
 
   return {
@@ -84,6 +90,7 @@ export const useSupplier = () => {
     defaultSupplier,
     editSupplier,
     deleteSupplierByID,
-    getSupplierById
+    getSupplierById,
+    supplierQuery
   };
 };

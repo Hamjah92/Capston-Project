@@ -20,6 +20,16 @@ export const useCustomer = () => {
     }
   };
 
+  const getAllCustomersWithAddress = async () => {
+    try {
+      const { data } = await privateApi.get('/customer/all');
+      return data as CustomerWithAddress[];
+    } catch (error) {
+      console.error("Failed to fetch customers:", error);
+      return [];
+    }
+  };
+
   const createCustomer = async (formData: CustomerWithAddress) => {
     const { data } = await privateApi.post('/customer/create', formData);
     return Promise.resolve(data as NestCommonRes);
@@ -77,5 +87,6 @@ export const useCustomer = () => {
     defaultCustomer,
     deleteCustomerByID,
     deleteMany,
+    getAllCustomersWithAddress
   };
 };

@@ -12,13 +12,13 @@ export const StockDetails: FC<Props> = ({ value, index }) => (
   <MuiTabPanel value={value} index={index}>
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
-        <RHFTextField name="openingStock" type="number" label="Opening stock" />
+        <RHFTextField name="openingQuantity" type="number" label="Opening Quantity" />
       </Grid>
       <Grid item xs={12} md={6}>
         <RHFTextField
           type="number"
           placeholder="Ex: 10"
-          name="lowStockThreshold"
+          name="lowStockReminder"
           label="Low Stock Threshold"
         />
       </Grid>

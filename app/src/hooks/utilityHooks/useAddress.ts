@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { Address, AddressType } from '../../@types/address';
+import { usePrivateApi } from "../myHooks/usePrivateApi";
 
 
 export const useAddress = (initialAddresses = [] as Address[], addressType?: AddressType) => {
   const [addresses, setAddresses] = useState(initialAddresses)
+  const privateApi = usePrivateApi();
+
 
   const addAddress = (address: Address) => {
     if (addresses.length === 0) {
@@ -33,6 +36,11 @@ export const useAddress = (initialAddresses = [] as Address[], addressType?: Add
 
   const getAddressById = (addressId: string) => addresses.find(item => item.addressId === addressId)
 
+  const getAddressByCustomerId = async (customerId: string) => {
 
-  return { addAddress, addresses, removeAddress, editAddress, changeDefaultAddress, getAddressById, resetAddresses, setAddresses, addressType };
+    const { data } = await privateApi.get(`/address/${customerId}`);
+    return Promise.resolve(data);
+  };
+
+  return { addAddress, addresses, removeAddress, editAddress, changeDefaultAddress, getAddressById, resetAddresses, setAddresses, addressType, getAddressByCustomerId };
 }

@@ -1,7 +1,7 @@
 import { NestCommonRes } from "src/@types/https";
 import { useSnackbar } from "src/components/snackbar";
 import { Row } from "@tanstack/react-table";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { usePrivateApi } from "../usePrivateApi";
 
 
@@ -80,6 +80,13 @@ export const useTax = () => {
     },
   });
 
+  const taxQuery = useQuery({
+    queryKey: ['taxes'],
+    queryFn: getAllTaxSlab,
+    initialData: [],
+    refetchOnWindowFocus: false,
+  });
 
-  return { defaultTax, createTaxSlab, getAllTaxSlab, editTaxSlab, delTax, deleteMany, getTaxById }
+
+  return { defaultTax, createTaxSlab, getAllTaxSlab, editTaxSlab, delTax, deleteMany, getTaxById, taxQuery }
 }

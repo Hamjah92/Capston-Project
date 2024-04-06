@@ -15,9 +15,10 @@ import FormControlLabel, {
 interface RHFCheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   name: string;
   helperText?: React.ReactNode;
+  size?: 'small' | 'medium' | 'large';
 }
 
-export function RHFCheckbox({ name, helperText, ...other }: RHFCheckboxProps) {
+export function RHFCheckbox({ name, helperText, size, ...other }: RHFCheckboxProps) {
   const { control } = useFormContext();
 
   return (
@@ -27,7 +28,9 @@ export function RHFCheckbox({ name, helperText, ...other }: RHFCheckboxProps) {
       render={({ field: { ref, ...restField }, fieldState: { error } }) => (
         <div>
           <FormControlLabel
-            control={<Checkbox inputRef={ref} {...restField} checked={restField.value} />}
+            control={
+              <Checkbox size={size} inputRef={ref} {...restField} checked={restField.value} />
+            }
             {...other}
           />
 

@@ -40,7 +40,7 @@ const ICONS = {
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
   customer: icon('ic_customer'),
-  purchases: icon('ic_purchases'),
+  purchase: icon('ic_purchase'),
   tax: icon('ic_tax'),
 };
 
@@ -74,6 +74,15 @@ export function useNavData() {
             ],
           },
           {
+            title: 'Invoice',
+            path: paths.dashboard.invoice.root,
+            icon: ICONS.invoice,
+            children: [
+              { title: 'list', path: paths.dashboard.invoice.list },
+              { title: 'Add', path: paths.dashboard.invoice.add },
+            ],
+          },
+          {
             title: 'Supplier',
             path: paths.dashboard.supplier.root,
             icon: ICONS.order,
@@ -83,12 +92,12 @@ export function useNavData() {
             ],
           },
           {
-            title: 'Purchases',
-            path: paths.dashboard.purchases.root,
-            icon: ICONS.purchases,
+            title: 'Purchase',
+            path: paths.dashboard.purchase.root,
+            icon: ICONS.purchase,
             children: [
-              { title: 'list', path: paths.dashboard.purchases.list },
-              { title: 'Add', path: paths.dashboard.purchases.add },
+              { title: 'list', path: paths.dashboard.purchase.list },
+              { title: 'Add', path: paths.dashboard.purchase.add },
             ],
           },
         ],

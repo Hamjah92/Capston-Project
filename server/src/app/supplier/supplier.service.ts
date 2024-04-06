@@ -34,6 +34,7 @@ export class SupplierService {
   async getAll() {
     return await this._supplierRepository.find({
       select: [
+        "id",
         'supplierId',
         'supplierName',
         'supplierEmail',
@@ -87,7 +88,7 @@ export class SupplierService {
 
   private async _findSupplier(supplierId: string, select?: (keyof Supplier)[]) {
     if (!select) {
-      select = ["supplierName", "supplierEmail", "supplierPhone","supplierGST"]
+      select = ["id","supplierName", "supplierEmail", "supplierPhone","supplierGST"]
     }
     return await this._supplierRepository.findOneOrFail({
       where: { supplierId: supplierId },

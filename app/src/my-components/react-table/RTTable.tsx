@@ -1,7 +1,10 @@
 import { FC, useState } from 'react';
 import {
   ColumnDef,
+  ColumnFiltersState,
   getCoreRowModel,
+  getExpandedRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -34,6 +37,7 @@ export const RTTable: FC<Props> = ({
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [isDense, setDense] = useState(defaultDense);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
@@ -47,11 +51,16 @@ export const RTTable: FC<Props> = ({
     state: {
       rowSelection,
       sorting,
+      columnFilters,
     },
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    maxLeafRowFilterDepth: 0, // only filter root level parent rows out
   });
   const { getHeaderGroups, getRowModel, getSelectedRowModel } = table;
   const selected = getSelectedRowModel().flatRows;
@@ -75,7 +84,7 @@ export const RTTable: FC<Props> = ({
         )}
         <Scrollbar>
           <Table size={isDense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
-            <RTHeader HeaderGroups={getHeaderGroups()} sx={sx} />
+            <RTHeader HeaderGroups={getHeaderGroups()} sx={sx} table={table} />
             <RTBody RowModelData={getRowModel()} />
           </Table>
         </Scrollbar>

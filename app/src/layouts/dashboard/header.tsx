@@ -19,9 +19,9 @@ import {
   Searchbar,
   AccountPopover,
   SettingsButton,
-  LanguagePopover,
-  ContactsPopover,
-  NotificationsPopover,
+  // LanguagePopover,
+  // ContactsPopover,
+  // NotificationsPopover,
 } from '../_common';
 
 // ----------------------------------------------------------------------
@@ -64,11 +64,11 @@ export default function Header({ onOpenNav }: Props) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
-        <LanguagePopover />
+        {/* <LanguagePopover /> */}
 
-        <NotificationsPopover />
+        {/* <NotificationsPopover /> */}
 
-        <ContactsPopover />
+        {/* <ContactsPopover /> */}
 
         <SettingsButton />
 

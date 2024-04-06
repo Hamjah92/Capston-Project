@@ -1,11 +1,9 @@
-// ----------------------------------------------------------------------
 
 const ROOTS = {
   AUTH: '/auth',
   DASHBOARD: '/dashboard',
 };
 
-// ----------------------------------------------------------------------
 
 export const paths = {
   // AUTH
@@ -40,11 +38,20 @@ export const paths = {
       add: `${ROOTS.DASHBOARD}/product/add`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/product/edit/${id}`,
     },
-    purchases: {
-      root: `${ROOTS.DASHBOARD}/purchases`,
-      list: `${ROOTS.DASHBOARD}/purchases/list`,
-      add: `${ROOTS.DASHBOARD}/purchases/add`,
-      edit: (id: string) => `${ROOTS.DASHBOARD}/purchases/edit/${id}`,
+    invoice: {
+      root: `${ROOTS.DASHBOARD}/invoice`,
+      list: `${ROOTS.DASHBOARD}/invoice/list`,
+      add: `${ROOTS.DASHBOARD}/invoice/add`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/invoice/edit/${id}`,
+      view: (id: string) => `${ROOTS.DASHBOARD}/invoice/view/${id}`,
+
+    },
+    purchase: {
+      root: `${ROOTS.DASHBOARD}/purchase`,
+      list: `${ROOTS.DASHBOARD}/purchase/list`,
+      add: `${ROOTS.DASHBOARD}/purchase/add`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/purchase/edit/${id}`,
+      view: (id: string) => `${ROOTS.DASHBOARD}/purchase/view/${id}`,
     },
     tax: {
       root: `${ROOTS.DASHBOARD}/tax`,

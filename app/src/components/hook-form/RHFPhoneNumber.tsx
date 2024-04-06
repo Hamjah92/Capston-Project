@@ -5,10 +5,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 type Props = {
   name: string;
   label: string;
+  size?: 'small' | 'medium';
 };
 
-export const RHFPhoneNumber: FC<Props> = ({ name, label }) => {
+export const RHFPhoneNumber: FC<Props> = ({ name, label, size = 'small' }) => {
   const { control } = useFormContext();
+
   return (
     <Controller
       control={control}
@@ -17,6 +19,7 @@ export const RHFPhoneNumber: FC<Props> = ({ name, label }) => {
         <MuiPhoneNumber
           fullWidth
           defaultCountry="in"
+          size={size}
           inputRef={ref}
           {...field}
           variant="outlined"

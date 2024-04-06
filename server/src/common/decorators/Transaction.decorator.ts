@@ -5,18 +5,17 @@ export function MyTransaction(): MethodDecorator {
 
     descriptor.value = async function (...args: any[]) {
       const queryRunner = this._queryRunner as QueryRunner;
-
-      await queryRunner.connect()
       try {
         await queryRunner.startTransaction()
         const result = await fn.apply(this, args);
         await queryRunner.commitTransaction()
         return result
       } catch (error) {
+        console.log(error)
         await queryRunner.rollbackTransaction()
         throw error
       } finally {
-        await queryRunner.release()
+        // await queryRunner.release()
       }
     };
   };

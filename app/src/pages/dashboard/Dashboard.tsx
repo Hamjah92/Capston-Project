@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import { DashboardOverview } from './components/DashboardOverview';
 // sections
-import OneView from 'src/sections/dashboard/view';
 
 // ----------------------------------------------------------------------
 
@@ -8,10 +8,10 @@ export default function Dashboard() {
   return (
     <>
       <Helmet>
-        <title> Dashboard</title>
+        <title> Dashboard: E-Commerce</title>
       </Helmet>
 
-      <OneView />
+      <DashboardOverview />
     </>
   );
 }

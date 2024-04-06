@@ -3,16 +3,16 @@ import { FC } from 'react';
 import Scrollbar from 'src/components/scrollbar';
 import DialogAnimate from 'src/components/animate/DialogAnimate';
 import { AddressForm } from './AddressForm';
-import { Address, AddressType } from '../../../@types/address';
+import { AddressType, IAddress } from '../../../@types/address';
 
 type Props = {
-  defaultAddress: Address | null;
+  defaultAddress: IAddress | null;
   handleCloseModal: () => void;
   isModalOpen: boolean;
   title: string;
   AddressFunctions: {
-    addAddress: (address: Address) => void;
-    editAddress: (address: Address) => void;
+    addAddress: (address: IAddress) => void;
+    editAddress: (address: IAddress) => void;
     addressType: AddressType;
     removeAddress: (address_id: string) => void;
   };

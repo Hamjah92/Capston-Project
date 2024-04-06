@@ -53,13 +53,14 @@ export default function ProductForm({ isEdit, currentProduct }: Props) {
   }, [isEdit, defaultValues, reset]);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+    const { SameTax, ...restData } = data;
+
     try {
       let res: NestCommonRes;
       if (!isEdit) {
-        res = await createProduct(data);
+        res = await createProduct(restData);
       } else {
-        res = await editProduct(data, productId!);
+        res = await editProduct(restData, productId!);
       }
       enqueueSnackbar(res!.message, { variant: res!.type });
       navigate('/dashboard/product/list');

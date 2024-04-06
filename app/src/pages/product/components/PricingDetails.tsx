@@ -13,7 +13,7 @@ const discountTypes = [
   { name: 'fix', value: 'fix' },
 ];
 const units = [
-  { name: 'KG', value: 'kg' },
+  { name: 'KG', value: 'KG' },
   { name: 'BOX', value: 'BOX' },
 ];
 export const PricingDetails: FC<Props> = ({ value, index }) => (
@@ -24,7 +24,7 @@ export const PricingDetails: FC<Props> = ({ value, index }) => (
       </Grid>
 
       <Grid item xs={12} md={3}>
-        <RHFTextField name="discount" label="Discount" />
+        <RHFTextField name="discount" type="number" label="Discount" />
       </Grid>
       <Grid item xs={12} md={3}>
         <RHFAutoCompleteObject

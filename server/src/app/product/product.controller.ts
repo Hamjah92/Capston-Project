@@ -34,6 +34,8 @@ export class ProductController {
 
   @Delete('deleteMany')
   deleteManyProducts(@Body('productIds') productIds: string[]) {
+    console.log(productIds);
+    
     return this.productService.deleteManyProducts(productIds);
   }
 }

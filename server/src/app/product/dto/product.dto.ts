@@ -1,5 +1,5 @@
 
-import { IsString, IsNumber, IsBoolean, IsOptional, ValidateNested, IsObject } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, IsOptional, ValidateNested, IsObject, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export type ProductTypes = "GOODS" | "SERVICE"  
@@ -19,10 +19,10 @@ class DiscountIn {
   // Define properties and validations for discountIn object
   // Example:
   @IsString()
-  name : string
+  name : "%" | "fix"
 
   @IsString()
-  value : "%" | "fix"
+  value : "percentage" | "fix"
 }
 
 
@@ -74,11 +74,13 @@ export class AddProductDTO {
     @IsNumber()
     availableQuantity: number;
 
-    @IsString()
-    SalesTax: string;
+    @IsArray()
+    @IsOptional()
+    salesTax: any[] | null;
 
-    @IsString()
-    PurchaseTax: string;
+    @IsArray()
+    @IsOptional()
+    purchaseTax: any[] | null;
 
     @IsBoolean()
     taxesInclusive: boolean;
